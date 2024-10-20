@@ -1,0 +1,9 @@
+JWT Auth:
+https://medium.com/@sajadshafi/jwt-authentication-in-c-net-core-7-web-api-b825b3aee11d
+
+Clean Architecture:
+https://medium.com/@mohanedzekry/clean-architecture-in-asp-net-core-web-api-d44e33893e1d
+
+CRUD:
+Option 1: https://medium.com/@ravipatel.it/asp-net-core-mvc-crud-operations-with-product-example-for-absolute-beginners-in-net-8-b012700c8cf6
+Option 2: https://www.freecodecamp.org/news/build-crud-operations-with-dotnet-core-handbook/

@@ -1,0 +1,13 @@
+.vs
+
+EasyResto/bin
+EasyResto/obj
+
+EasyResto.Application/bin
+EasyResto.Application/obj
+
+EasyResto.Domain/bin
+EasyResto.Domain/obj
+
+EasyResto.Infrastructure/bin
+EasyResto.Infrastructure/obj
