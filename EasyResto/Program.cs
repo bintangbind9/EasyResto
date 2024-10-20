@@ -1,4 +1,5 @@
 using EasyResto.Extensions;
+using EasyResto.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -14,6 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddAppConfigurer(configuration);
 builder.Services.AddAppDI();
 
 builder.Services.AddAuthentication(cfg => {
@@ -36,7 +40,15 @@ builder.Services.AddAuthentication(cfg => {
     };
 });
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+builder.Services.AddLogging();
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope()) {
+    var context = scope.ServiceProvider;
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -46,6 +58,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler();
 
 app.UseAuthentication();
 

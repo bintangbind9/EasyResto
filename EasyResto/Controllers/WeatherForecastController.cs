@@ -7,7 +7,7 @@ namespace EasyResto.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -27,7 +27,7 @@ namespace EasyResto.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            AppUser user = new AppUser { Name = "Bintang", IsActive = true, Password ="123", Username = "bintang", Id = 1};
+            AppUser user = new AppUser { Name = "Bintang", IsActive = true, Password ="123", Username = "bintang", Id = new Guid()};
             string jwt = _authHelpers.GenerateJWTToken(user);
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
