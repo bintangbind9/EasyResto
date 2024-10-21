@@ -1,4 +1,6 @@
 ﻿using EasyResto.Domain.Entities;
+using EasyResto.Domain.Enums;
+using EasyResto.Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
@@ -210,6 +212,74 @@ namespace EasyResto.Infrastructure.Context
                 entity.HasOne(x => x.Order).WithMany(x => x.OrderDetails).HasForeignKey(x => x.OrderId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(x => x.FoodItem).WithMany(x => x.OrderDetails).HasForeignKey(x => x.FoodItemId).OnDelete(DeleteBehavior.Restrict);
             });
+
+            #region "SEED"
+            string createdBy = "Admin";
+            DateTime now = DateTime.Now;
+            string adminPassword = new PasswordService().HashPassword("admin");
+            Guid adminAppUserId = Guid.NewGuid();
+            Guid adminRoleId = Guid.NewGuid();
+
+            List<Role> roles = new List<Role>();
+            foreach (RoleCode roleCode in Enum.GetValues(typeof(RoleCode)))
+            {
+                Role role = new Role();
+
+                if (roleCode == RoleCode.Admin)
+                {
+                    role.Id = adminRoleId;
+                }
+                else
+                {
+                    role.Id = Guid.NewGuid();
+                }
+
+                role.Code = roleCode.ToString();
+                role.Name = roleCode.ToString();
+                role.CreatedBy = createdBy;
+                role.CreatedAt = now;
+
+                roles.Add(role);
+            }
+            modelBuilder.Entity<Role>().HasData(roles);
+
+            modelBuilder.Entity<AppUser>().HasData(
+                new AppUser { Id = adminAppUserId, Username = "admin", Name = "Admin", Password = adminPassword, IsActive = true, CreatedBy = createdBy, CreatedAt = now }
+            );
+
+            modelBuilder.Entity<AppUserRole>().HasData(
+                new AppUserRole { AppUserId = adminAppUserId, RoleId = adminRoleId }
+            );
+
+            List<Privilege> privileges = new List<Privilege>();
+            foreach (PrivilegeCode privilegeCode in Enum.GetValues(typeof(PrivilegeCode)))
+            {
+                Privilege privilege = new Privilege { Id = Guid.NewGuid(), Code = privilegeCode.ToString(), Name = privilegeCode.ToString(), CreatedBy = createdBy, CreatedAt = now };
+                privileges.Add(privilege);
+            }
+            modelBuilder.Entity<Privilege>().HasData(privileges);
+
+            List<RolePrivilege> rolePrivileges = new List<RolePrivilege>();
+            foreach (Privilege privilege in privileges)
+            {
+                rolePrivileges.Add(new RolePrivilege { RoleId = adminRoleId, PrivilegeId = privilege.Id });
+            }
+            modelBuilder.Entity<RolePrivilege>().HasData(rolePrivileges);
+
+            List<FoodItemStatus> foodItemStatuses = new List<FoodItemStatus>();
+            foreach (FoodStatusCode foodStatusCode in Enum.GetValues(typeof(FoodStatusCode)))
+            {
+                foodItemStatuses.Add(new FoodItemStatus { Id = Guid.NewGuid(), Code = foodStatusCode.ToString(), Name = foodStatusCode.ToString(), CreatedBy = createdBy, CreatedAt = now });
+            }
+            modelBuilder.Entity<FoodItemStatus>().HasData(foodItemStatuses);
+
+            List<OrderStatus> orderStatuses = new List<OrderStatus>();
+            foreach (OrderStatusCode orderStatusCode in Enum.GetValues(typeof(OrderStatusCode)))
+            {
+                orderStatuses.Add(new OrderStatus { Id = Guid.NewGuid(), Code = orderStatusCode.ToString(), Name = orderStatusCode.ToString(), CreatedBy = createdBy, CreatedAt = now });
+            }
+            modelBuilder.Entity<OrderStatus>().HasData(orderStatuses);
+            #endregion
         }
     }
 }
