@@ -2,7 +2,7 @@
 
 namespace EasyResto.Domain.Entities
 {
-    public class FoodCategory : BaseEntity
+    public class FoodItemStatus : BaseEntity
     {
         public string Code { get; set; }
 
