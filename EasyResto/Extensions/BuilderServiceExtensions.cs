@@ -22,6 +22,7 @@ namespace EasyResto.Extensions
             services.AddSingleton<AuthHelpers>();
             services.AddSingleton<PasswordService>();
             services.AddTransient<EasyRestoDbContext>();
+            services.AddTransient<IBaseRepository<AppUser>, AppUserRepository>();
             services.AddTransient<IBaseRepository<FoodCategory>, FoodCategoryRepository>();
 
             return services;

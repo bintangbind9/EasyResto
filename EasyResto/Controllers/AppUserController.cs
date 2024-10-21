@@ -2,6 +2,7 @@
 using EasyResto.Application.Repository;
 using EasyResto.Domain.Common;
 using EasyResto.Domain.Contracts.Request;
+using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -10,41 +11,42 @@ namespace EasyResto.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class FoodCategoryController : ControllerBase
+    public class AppUserController : ControllerBase
     {
-        private readonly ILogger<FoodCategoryController> _logger;
-        private readonly IBaseRepository<FoodCategory> _foodCategoryRepository;
+        private readonly string _objName = "App User";
+        private readonly ILogger<AppUserController> _logger;
+        private readonly IBaseRepository<AppUser> _appUserRepository;
         private readonly IMapper _mapper;
 
-        public FoodCategoryController(ILogger<FoodCategoryController> logger, IBaseRepository<FoodCategory> foodCategoryRepository, IMapper mapper)
+        public AppUserController(ILogger<AppUserController> logger, IBaseRepository<AppUser> appUserRepository, IMapper mapper)
         {
             _logger = logger;
-            _foodCategoryRepository = foodCategoryRepository;
+            _appUserRepository = appUserRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var response = new BaseResponse<IEnumerable<FoodCategory>>();
+            var response = new BaseResponse<IEnumerable<AppUserResponse>>();
 
             try
             {
-                var foodCategories = await _foodCategoryRepository.GetAllAsync();
+                var appUsers = await _appUserRepository.GetAllAsync();
 
-                if (foodCategories == null || !foodCategories.Any())
+                if (appUsers == null || !appUsers.Any())
                 {
-                    response.Message = "No Food Category Items found.";
+                    response.Message = $"No {_objName}s found.";
                     return Ok(response);
                 }
 
-                response.Message = "Successfully retrieved all Food Categories.";
-                response.Data = foodCategories;
+                response.Message = $"Successfully retrieved all {_objName}s.";
+                response.Data = appUsers.Select(e => _mapper.Map<AppUserResponse>(e));
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                response.Message = "An error occurred while retrieving all Food Categories.";
+                response.Message = $"An error occurred while retrieving all {_objName}s.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);
@@ -54,32 +56,32 @@ namespace EasyResto.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            var response = new BaseResponse<FoodCategory>();
+            var response = new BaseResponse<AppUserResponse>();
 
             try
             {
-                var foodCategory = await _foodCategoryRepository.GetByIdAsync(id);
-                if (foodCategory == null)
+                var appUser = await _appUserRepository.GetByIdAsync(id);
+                if (appUser == null)
                 {
                     response.Status = (int)HttpStatusCode.NotFound;
-                    response.Message = $"No Food Category item with Id {id} found.";
+                    response.Message = $"No {_objName} with Id {id} found.";
                     return NotFound(response);
                 }
 
-                response.Message = $"Successfully retrieved Food Category item with Id {id}.";
-                response.Data = foodCategory;
+                response.Message = $"Successfully retrieved {_objName} with Id {id}.";
+                response.Data = _mapper.Map<AppUserResponse>(appUser);
                 return Ok(response);
             }
             catch (KeyNotFoundException ex)
             {
-                response.Message = $"An error occurred while retrieving the Food Category item with Id {id}.";
+                response.Message = $"An error occurred while retrieving the {_objName} with Id {id}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = (int)HttpStatusCode.NotFound;
                 return NotFound(response);
             }
             catch (Exception ex)
             {
-                response.Message = $"An error occurred while retrieving the Food Category item with Id {id}.";
+                response.Message = $"An error occurred while retrieving the {_objName} with Id {id}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);
@@ -87,7 +89,7 @@ namespace EasyResto.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateFoodCategoryRequest request)
+        public async Task<IActionResult> Create(CreateAppUserRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -98,15 +100,15 @@ namespace EasyResto.Controllers
 
             try
             {
-                var obj = _mapper.Map<FoodCategory>(request);
-                await _foodCategoryRepository.CreateAsync(obj);
+                var obj = _mapper.Map<AppUser>(request);
+                await _appUserRepository.CreateAsync(obj);
 
-                response.Message = "Food Category successfully create";
+                response.Message = $"{_objName} successfully created.";
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                response.Message = "An error occurred while creating the Food Category Item.";
+                response.Message = $"An error occurred while creating the {_objName}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);
@@ -114,7 +116,7 @@ namespace EasyResto.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, UpdateFoodCategoryRequest request)
+        public async Task<IActionResult> UpdateAsync(Guid id, UpdateAppUserRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -125,30 +127,30 @@ namespace EasyResto.Controllers
 
             try
             {
-                var foodCategory = await _foodCategoryRepository.GetByIdAsync(id);
-                if (foodCategory == null)
+                var appUser = await _appUserRepository.GetByIdAsync(id);
+                if (appUser == null)
                 {
-                    response.Message = $"Food Category Item with id {id} not found.";
+                    response.Message = $"{_objName} with id {id} not found.";
                     response.Status = (int)HttpStatusCode.NotFound;
                     return NotFound(response);
                 }
 
-                var obj = _mapper.Map<FoodCategory>(request);
-                await _foodCategoryRepository.UpdateAsync(id, obj);
+                var obj = _mapper.Map<AppUser>(request);
+                await _appUserRepository.UpdateAsync(id, obj);
 
-                response.Message = $"Food Category Item with id {id} successfully updated.";
+                response.Message = $"{_objName} with id {id} successfully updated.";
                 return Ok(response);
             }
             catch (KeyNotFoundException ex)
             {
-                response.Message = $"An error occurred while retrieving the Food Category item with Id {id}.";
+                response.Message = $"An error occurred while retrieving the {_objName} with Id {id}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = (int)HttpStatusCode.NotFound;
                 return NotFound(response);
             }
             catch (Exception ex)
             {
-                response.Message = $"An error occurred while updating Food Category with id {id}.";
+                response.Message = $"An error occurred while updating {_objName} with id {id}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);
@@ -162,29 +164,29 @@ namespace EasyResto.Controllers
 
             try
             {
-                var foodCategory = await _foodCategoryRepository.GetByIdAsync(id);
-                if (foodCategory == null)
+                var appUser = await _appUserRepository.GetByIdAsync(id);
+                if (appUser == null)
                 {
-                    response.Message = $"Food Category Item with id {id} not found.";
+                    response.Message = $"{_objName} with id {id} not found.";
                     response.Status = (int)HttpStatusCode.NotFound;
                     return NotFound(response);
                 }
 
-                await _foodCategoryRepository.DeleteAsync(id);
+                await _appUserRepository.DeleteAsync(id);
 
-                response.Message = $"Food Category with id {id} successfully deleted.";
+                response.Message = $"{_objName} with id {id} successfully deleted.";
                 return Ok(response);
             }
             catch (KeyNotFoundException ex)
             {
-                response.Message = $"An error occurred while retrieving the Food Category item with Id {id}.";
+                response.Message = $"An error occurred while retrieving the {_objName} with Id {id}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = (int)HttpStatusCode.NotFound;
                 return NotFound(response);
             }
             catch (Exception ex)
             {
-                response.Message = $"An error occurred while deleting Food Category Item with id {id}.";
+                response.Message = $"An error occurred while deleting {_objName} with id {id}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);

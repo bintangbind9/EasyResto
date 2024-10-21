@@ -1,29 +1,34 @@
 ﻿using EasyResto.Application.Repository;
 using EasyResto.Domain.Entities;
 using EasyResto.Infrastructure.Context;
+using EasyResto.Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace EasyResto.Infrastructure.Repository
 {
-    public class FoodCategoryRepository : IBaseRepository<FoodCategory>
+    public class AppUserRepository : IBaseRepository<AppUser>
     {
-        private readonly string _objName = "Food Category";
+        private readonly string _objName = "AppUser";
         private readonly EasyRestoDbContext _context;
-        private readonly ILogger<FoodCategoryRepository> _logger;
+        private readonly ILogger<AppUserRepository> _logger;
+        private readonly PasswordService _passwordService;
 
-        public FoodCategoryRepository(EasyRestoDbContext context, ILogger<FoodCategoryRepository> logger)
+        public AppUserRepository(EasyRestoDbContext context, ILogger<AppUserRepository> logger, PasswordService passwordService)
         {
             _context = context;
             _logger = logger;
+            _passwordService = passwordService;
         }
 
-        public async Task CreateAsync(FoodCategory obj)
+        public async Task CreateAsync(AppUser obj)
         {
             try
             {
+                obj.Password = _passwordService.HashPassword(obj.Password);
+                obj.IsActive = true;
                 obj.CreatedAt = DateTime.Now;
-                _context.FoodCategories.Add(obj);
+                _context.AppUsers.Add(obj);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -35,10 +40,10 @@ namespace EasyResto.Infrastructure.Repository
 
         public async Task DeleteAsync(Guid id)
         {
-            var foodCategory = await _context.FoodCategories.FindAsync(id);
-            if (foodCategory != null)
+            var appUser = await _context.AppUsers.FindAsync(id);
+            if (appUser != null)
             {
-                _context.FoodCategories.Remove(foodCategory);
+                _context.AppUsers.Remove(appUser);
                 await _context.SaveChangesAsync();
             }
             else
@@ -47,9 +52,9 @@ namespace EasyResto.Infrastructure.Repository
             }
         }
 
-        public async Task<IEnumerable<FoodCategory>> GetAllAsync()
+        public async Task<IEnumerable<AppUser>> GetAllAsync()
         {
-            var objs = await _context.FoodCategories.ToListAsync();
+            var objs = await _context.AppUsers.ToListAsync();
             if (objs == null)
             {
                 throw new Exception($"No {_objName} items found.");
@@ -58,9 +63,9 @@ namespace EasyResto.Infrastructure.Repository
             return objs;
         }
 
-        public async Task<FoodCategory>GetByIdAsync(Guid id)
+        public async Task<AppUser> GetByIdAsync(Guid id)
         {
-            var obj = await _context.FoodCategories.FindAsync(id);
+            var obj = await _context.AppUsers.FindAsync(id);
             if (obj == null)
             {
                 throw new KeyNotFoundException($"No {_objName} item with Id {id} found.");
@@ -69,22 +74,21 @@ namespace EasyResto.Infrastructure.Repository
             return obj;
         }
 
-        public async Task UpdateAsync(Guid id, FoodCategory obj)
+        public async Task UpdateAsync(Guid id, AppUser obj)
         {
             try
             {
-                var foodCategory = await _context.FoodCategories.FindAsync(id);
-                if (foodCategory == null)
+                var appUser = await _context.AppUsers.FindAsync(id);
+                if (appUser == null)
                 {
                     throw new Exception($"{_objName} item with id {id} not found.");
                 }
 
-                if (obj.Name != null)
-                {
-                    foodCategory.Name = obj.Name;
-                }
+                if (obj.Name != null) appUser.Name = obj.Name;
+                if (obj.Password != null) appUser.Password = _passwordService.HashPassword(obj.Password);
+                appUser.IsActive = obj.IsActive;
 
-                foodCategory.UpdatedAt = DateTime.Now;
+                appUser.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
             }
