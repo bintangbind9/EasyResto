@@ -1,7 +1,7 @@
 ﻿using EasyResto.Application.Repository;
+using EasyResto.Application.Service;
 using EasyResto.Domain.Entities;
 using EasyResto.Infrastructure.Context;
-using EasyResto.Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -12,9 +12,9 @@ namespace EasyResto.Infrastructure.Repository
         private readonly string _objName = "AppUser";
         private readonly EasyRestoDbContext _context;
         private readonly ILogger<AppUserRepository> _logger;
-        private readonly PasswordService _passwordService;
+        private readonly IPasswordService _passwordService;
 
-        public AppUserRepository(EasyRestoDbContext context, ILogger<AppUserRepository> logger, PasswordService passwordService)
+        public AppUserRepository(EasyRestoDbContext context, ILogger<AppUserRepository> logger, IPasswordService passwordService)
         {
             _context = context;
             _logger = logger;

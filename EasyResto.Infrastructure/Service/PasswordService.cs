@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EasyResto.Application.Service;
+using Microsoft.AspNetCore.Identity;
 
 namespace EasyResto.Infrastructure.Service
 {
-    public class PasswordService
+    public class PasswordService : IPasswordService
     {
         private readonly PasswordHasher<object> _passwordHasher;
 
