@@ -8,6 +8,6 @@ namespace EasyResto.Domain.Entities
 
         public string Name { get; set; }
 
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

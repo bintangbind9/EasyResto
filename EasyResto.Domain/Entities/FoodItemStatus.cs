@@ -8,6 +8,6 @@ namespace EasyResto.Domain.Entities
 
         public string Name { get; set; }
 
-        public ICollection<FoodItem> FoodItems { get; set; } = new List<FoodItem>();
+        public virtual ICollection<FoodItem> FoodItems { get; set; } = new List<FoodItem>();
     }
 }

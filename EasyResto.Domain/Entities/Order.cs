@@ -5,19 +5,19 @@ namespace EasyResto.Domain.Entities
     public class Order : BaseEntity
     {
         public Guid DiningTableId { get; set; }
-        public DiningTable DiningTable { get; set; }
+        public virtual DiningTable DiningTable { get; set; }
 
         public Guid OrderStatusId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public virtual OrderStatus OrderStatus { get; set; }
 
         public Guid WaiterId { get; set; }
-        public AppUser Waiter { get; set; }
+        public virtual AppUser Waiter { get; set; }
 
         public Guid? ChefId { get; set; }
-        public AppUser Chef { get; set; }
+        public virtual AppUser Chef { get; set; }
 
         public Guid? CashierId { get; set; }
-        public AppUser Cashier { get; set; }
+        public virtual AppUser Cashier { get; set; }
 
         public string Code { get; set; }
 
@@ -33,6 +33,6 @@ namespace EasyResto.Domain.Entities
 
         public string CustomerNote { get; set; }
 
-        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }

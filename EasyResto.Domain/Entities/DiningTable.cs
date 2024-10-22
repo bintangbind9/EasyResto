@@ -10,6 +10,6 @@ namespace EasyResto.Domain.Entities
 
         public int Capacity { get; set; }
 
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

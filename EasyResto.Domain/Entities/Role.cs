@@ -8,8 +8,8 @@ namespace EasyResto.Domain.Entities
 
         public string Name { get; set; }
 
-        public ICollection<AppUserRole> AppUserRoles { get; set; } = new List<AppUserRole>();
+        public virtual ICollection<AppUserRole> AppUserRoles { get; set; } = new List<AppUserRole>();
 
-        public ICollection<RolePrivilege> RolePrivileges { get; set; } = new List<RolePrivilege>();
+        public virtual ICollection<RolePrivilege> RolePrivileges { get; set; } = new List<RolePrivilege>();
     }
 }

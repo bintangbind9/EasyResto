@@ -4,6 +4,8 @@ using EasyResto.Domain.Common;
 using EasyResto.Domain.Contracts.Request;
 using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
+using EasyResto.Middleware;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -25,6 +27,8 @@ namespace EasyResto.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
+        [AuthPrivilege("ReadAppUser")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -53,6 +57,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("ReadAppUser")]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
@@ -88,6 +94,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("CreateAppUser")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateAppUserRequest request)
         {
@@ -115,6 +123,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("UpdateAppUser")]
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdateAppUserRequest request)
         {
@@ -157,6 +167,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("DeleteAppUser")]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {

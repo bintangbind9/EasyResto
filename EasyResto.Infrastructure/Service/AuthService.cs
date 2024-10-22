@@ -1,6 +1,7 @@
 ﻿using EasyResto.Application.Repository;
 using EasyResto.Application.Service;
 using EasyResto.Domain.Entities;
+using EasyResto.Domain.Enums;
 using EasyResto.Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -63,6 +64,16 @@ namespace EasyResto.Infrastructure.Service
                 new Claim(ClaimTypes.GivenName, user.Name),
                 new Claim(ClaimTypes.Name, user.Username),
             };
+
+            foreach (AppUserRole appUserRole in user.AppUserRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, appUserRole.Role.Code));
+
+                foreach (RolePrivilege rolePrivilege in appUserRole.Role.RolePrivileges)
+                {
+                    claims.Add(new Claim(AuthCode.Privilege.ToString(), rolePrivilege.Privilege.Code));
+                }
+            }
 
             var jwtToken = new JwtSecurityToken(
                 claims: claims,

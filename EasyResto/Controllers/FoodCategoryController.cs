@@ -3,6 +3,8 @@ using EasyResto.Application.Repository;
 using EasyResto.Domain.Common;
 using EasyResto.Domain.Contracts.Request;
 using EasyResto.Domain.Entities;
+using EasyResto.Middleware;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -23,6 +25,8 @@ namespace EasyResto.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
+        [AuthPrivilege("ReadFoodCategory")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -51,6 +55,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("ReadFoodCategory")]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
@@ -86,6 +92,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("CreateFoodCategory")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateFoodCategoryRequest request)
         {
@@ -113,6 +121,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("UpdateFoodCategory")]
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateAsync(Guid id, UpdateFoodCategoryRequest request)
         {
@@ -155,6 +165,8 @@ namespace EasyResto.Controllers
             }
         }
 
+        [Authorize]
+        [AuthPrivilege("DeleteFoodCategory")]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {

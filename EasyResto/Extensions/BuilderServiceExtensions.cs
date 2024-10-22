@@ -20,9 +20,9 @@ namespace EasyResto.Extensions
         public static IServiceCollection AddAppDI(this IServiceCollection services)
         {
             services.AddSingleton<IPasswordService, PasswordService>();
-            services.AddTransient<EasyRestoDbContext>();
+            services.AddDbContext<EasyRestoDbContext>();
             services.AddTransient<IBaseRepository<AppUser>, AppUserRepository>();
-            services.AddSingleton<IAuthService, AuthService>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IBaseRepository<FoodCategory>, FoodCategoryRepository>();
 
             return services;
