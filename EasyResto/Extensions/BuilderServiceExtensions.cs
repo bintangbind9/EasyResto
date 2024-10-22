@@ -2,7 +2,6 @@
 using EasyResto.Application.Service;
 using EasyResto.Domain.Common;
 using EasyResto.Domain.Entities;
-using EasyResto.Helpers;
 using EasyResto.Infrastructure.Context;
 using EasyResto.Infrastructure.Repository;
 using EasyResto.Infrastructure.Service;
@@ -20,10 +19,10 @@ namespace EasyResto.Extensions
 
         public static IServiceCollection AddAppDI(this IServiceCollection services)
         {
-            services.AddSingleton<AuthHelpers>();
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddTransient<EasyRestoDbContext>();
             services.AddTransient<IBaseRepository<AppUser>, AppUserRepository>();
+            services.AddSingleton<IAuthService, AuthService>();
             services.AddTransient<IBaseRepository<FoodCategory>, FoodCategoryRepository>();
 
             return services;

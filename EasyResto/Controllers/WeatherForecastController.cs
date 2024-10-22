@@ -1,5 +1,5 @@
+using EasyResto.Application.Service;
 using EasyResto.Domain.Entities;
-using EasyResto.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,19 +16,19 @@ namespace EasyResto.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly AuthHelpers _authHelpers;
+        private readonly IAuthService _authService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, AuthHelpers authHelpers)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IAuthService authService)
         {
             _logger = logger;
-            _authHelpers = authHelpers;
+            _authService = authService;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             AppUser user = new AppUser { Name = "Bintang", IsActive = true, Password ="123", Username = "bintang", Id = new Guid()};
-            string jwt = _authHelpers.GenerateJWTToken(user);
+            string jwt = _authService.GenerateJWTToken(user);
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

@@ -25,6 +25,7 @@ namespace EasyResto.Infrastructure.Repository
         {
             try
             {
+                obj.Username = obj.Username.Trim();
                 obj.Password = _passwordService.HashPassword(obj.Password);
                 obj.IsActive = true;
                 obj.CreatedAt = DateTime.Now;
@@ -97,6 +98,12 @@ namespace EasyResto.Infrastructure.Repository
                 _logger.LogError(ex, $"An error occurred while updating the {_objName} item with id {id}.");
                 throw;
             }
+        }
+
+        public async Task<AppUser?> Get(string username, bool isActive = true)
+        {
+            var obj = await _context.AppUsers.Where(e => e.Username == username && e.IsActive == isActive).SingleOrDefaultAsync();
+            return obj;
         }
     }
 }
