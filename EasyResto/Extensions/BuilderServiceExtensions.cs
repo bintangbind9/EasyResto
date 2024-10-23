@@ -6,6 +6,7 @@ using EasyResto.Infrastructure.Context;
 using EasyResto.Infrastructure.Repository;
 using EasyResto.Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace EasyResto.Extensions
 {
@@ -13,12 +14,14 @@ namespace EasyResto.Extensions
     {
         public static IServiceCollection AddAppDI(this IServiceCollection services, ConfigurationManager configuration)
         {
+            services.AddHttpContextAccessor();
             services.Configure<DbSettings>(configuration.GetSection("DbSettings"));
 
             services.AddSingleton<IPasswordService, PasswordService>();
-            services.AddDbContextFactory<EasyRestoDbContext>(options =>
+            services.AddDbContextFactory<EasyRestoDbContext>((provider, options) =>
             {
-                options.UseLazyLoadingProxies().UseSqlServer(configuration["DbSettings:ConnectionString"]);
+                var dbSettings = provider.GetRequiredService<IOptions<DbSettings>>().Value;
+                options.UseLazyLoadingProxies().UseSqlServer(dbSettings?.ConnectionString);
             });
             services.AddTransient<IBaseRepository<AppUser>, AppUserRepository>();
             services.AddTransient<IAuthService, AuthService>();

@@ -28,7 +28,6 @@ namespace EasyResto.Infrastructure.Repository
                 obj.Username = obj.Username.Trim();
                 obj.Password = _passwordService.HashPassword(obj.Password);
                 obj.IsActive = true;
-                obj.CreatedAt = DateTime.Now;
                 _context.AppUsers.Add(obj);
                 await _context.SaveChangesAsync();
             }
@@ -88,8 +87,6 @@ namespace EasyResto.Infrastructure.Repository
                 if (obj.Name != null) appUser.Name = obj.Name;
                 if (obj.Password != null) appUser.Password = _passwordService.HashPassword(obj.Password);
                 appUser.IsActive = obj.IsActive;
-
-                appUser.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
             }

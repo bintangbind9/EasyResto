@@ -1,14 +1,22 @@
-﻿using EasyResto.Domain.Entities;
+﻿using EasyResto.Domain.Common;
+using EasyResto.Domain.Entities;
 using EasyResto.Domain.Enums;
 using EasyResto.Infrastructure.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyResto.Infrastructure.Context
 {
     public class EasyRestoDbContext : DbContext
     {
-        public EasyRestoDbContext(DbContextOptions<EasyRestoDbContext> options) : base(options) { }
-        
+        private readonly string _unknownUser = "Unknown";
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public EasyRestoDbContext(DbContextOptions<EasyRestoDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<AppUserRole> AppUserRoles { get; set; }
@@ -21,6 +29,52 @@ namespace EasyResto.Infrastructure.Context
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+
+        public override int SaveChanges()
+        {
+            var userName = _httpContextAccessor.HttpContext?.User.Identity?.Name ?? _unknownUser;
+            var addedEntries = ChangeTracker.Entries<BaseEntity>()
+                .Where(e => e.State == EntityState.Added);
+            var modifiedEntries = ChangeTracker.Entries<BaseEntity>()
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in addedEntries)
+            {
+                entry.Entity.CreatedBy = userName;
+                entry.Entity.CreatedAt = DateTime.Now;
+            }
+
+            foreach (var entry in modifiedEntries)
+            {
+                entry.Entity.UpdatedBy = userName;
+                entry.Entity.UpdatedAt = DateTime.Now;
+            }
+
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var userName = _httpContextAccessor.HttpContext?.User.Identity?.Name ?? _unknownUser;
+            var addedEntries = ChangeTracker.Entries<BaseEntity>()
+                .Where(e => e.State == EntityState.Added);
+            var modifiedEntries = ChangeTracker.Entries<BaseEntity>()
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in addedEntries)
+            {
+                entry.Entity.CreatedBy = userName;
+                entry.Entity.CreatedAt = DateTime.Now;
+            }
+
+            foreach (var entry in modifiedEntries)
+            {
+                entry.Entity.UpdatedBy = userName;
+                entry.Entity.UpdatedAt = DateTime.Now;
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

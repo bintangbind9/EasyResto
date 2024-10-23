@@ -22,7 +22,6 @@ namespace EasyResto.Infrastructure.Repository
         {
             try
             {
-                obj.CreatedAt = DateTime.Now;
                 _context.FoodCategories.Add(obj);
                 await _context.SaveChangesAsync();
             }
@@ -83,8 +82,6 @@ namespace EasyResto.Infrastructure.Repository
                 {
                     foodCategory.Name = obj.Name;
                 }
-
-                foodCategory.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
             }
