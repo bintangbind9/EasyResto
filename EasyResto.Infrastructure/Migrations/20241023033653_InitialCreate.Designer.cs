@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyResto.Infrastructure.Migrations
 {
     [DbContext(typeof(EasyRestoDbContext))]
-    [Migration("20241021074512_InitialSeed")]
-    partial class InitialSeed
+    [Migration("20241023033653_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace EasyResto.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -75,12 +78,12 @@ namespace EasyResto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b4834d25-fdb0-420e-9201-eefaa2d61ee5"),
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            Id = new Guid("3079f683-d7b6-4b97-98a2-fe592ad6a509"),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             IsActive = true,
                             Name = "Admin",
-                            Password = "AQAAAAIAAYagAAAAEAWU2uDAa2OfNJScHxyH8fR9kmnLNPqBji+KFrdqR/oSeYH6AOBy4wm894/3eEQF3g==",
+                            Password = "AQAAAAIAAYagAAAAECQ4QIFAO5570Ed/GbPUk2FBareVyXYc1uGln9Jlatws2iXcqNT7sJSwmO1X6Bas/Q==",
                             Username = "admin"
                         });
                 });
@@ -102,8 +105,8 @@ namespace EasyResto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            AppUserId = new Guid("b4834d25-fdb0-420e-9201-eefaa2d61ee5"),
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da")
+                            AppUserId = new Guid("3079f683-d7b6-4b97-98a2-fe592ad6a509"),
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487")
                         });
                 });
 
@@ -294,17 +297,17 @@ namespace EasyResto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cabc0a34-4ce6-4eba-bfd1-0321538c3d7f"),
+                            Id = new Guid("aa4b811e-0244-4d0e-829f-a846b4f7d7a6"),
                             Code = "Ready",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Ready"
                         },
                         new
                         {
-                            Id = new Guid("548c763a-f7e4-4a22-8c25-bae275fb2c4b"),
+                            Id = new Guid("8edf589a-665d-4625-8a78-88c71774eb12"),
                             Code = "NotReady",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "NotReady"
                         });
@@ -485,65 +488,65 @@ namespace EasyResto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("94f5c8c5-93e1-4513-ae10-431fd28f68a8"),
+                            Id = new Guid("298fc1bc-c2c2-4c82-adf1-1f54ecaab704"),
                             Code = "Draft",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Draft"
                         },
                         new
                         {
-                            Id = new Guid("aeb883ff-29cf-4141-872a-19111fc2569f"),
+                            Id = new Guid("b09a5bab-f1cc-4d48-ad6e-6eef967ee385"),
                             Code = "Requested",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Requested"
                         },
                         new
                         {
-                            Id = new Guid("0ecf549a-5fa0-4b1c-85b4-0b9d50079ce3"),
+                            Id = new Guid("ca0c4fee-be3f-4eb3-a6cf-a1fcf9178d37"),
                             Code = "Cooking",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Cooking"
                         },
                         new
                         {
-                            Id = new Guid("f94741b4-0e99-46f9-8269-ddb5402a24f0"),
+                            Id = new Guid("34c98e4a-d2f6-4d59-a335-ce003cc7e530"),
                             Code = "Ready",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Ready"
                         },
                         new
                         {
-                            Id = new Guid("4dc62fd3-b3c5-4ce1-b349-11002bedf363"),
+                            Id = new Guid("7efe4fe2-b632-4939-8d97-c047f2081f44"),
                             Code = "Delivered",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Delivered"
                         },
                         new
                         {
-                            Id = new Guid("80344bd1-fd91-4a56-9f25-cab6ef02007f"),
+                            Id = new Guid("049b015e-4072-4255-999b-2d4de9eac527"),
                             Code = "Billed",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Billed"
                         },
                         new
                         {
-                            Id = new Guid("b0e424f8-2a6f-4cbb-844e-c3938d06c33f"),
+                            Id = new Guid("8437d6a8-8086-4d06-b238-94864878f63d"),
                             Code = "Closed",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Closed"
                         },
                         new
                         {
-                            Id = new Guid("070e1ba3-8eb8-40ba-a661-695b49890252"),
+                            Id = new Guid("ffa97289-3146-4fe8-8ec6-3fe831169fe0"),
                             Code = "Canceled",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Canceled"
                         });
@@ -593,385 +596,385 @@ namespace EasyResto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7feafffa-bf03-425f-b16e-ba0ba930eb42"),
+                            Id = new Guid("d710e7f7-e95e-430a-ac3b-12e270aeeb1b"),
                             Code = "CreateAppUser",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateAppUser"
                         },
                         new
                         {
-                            Id = new Guid("91fd1296-1de6-4343-a50c-dd12426c3c60"),
+                            Id = new Guid("b15eed2f-d563-4f2f-b4c9-2797b75b4370"),
                             Code = "ReadAppUser",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadAppUser"
                         },
                         new
                         {
-                            Id = new Guid("1252ca85-8129-410f-bbbe-d18cd38ffc20"),
+                            Id = new Guid("d8df5ad7-7dde-46a2-8775-b2b2e62f92c2"),
                             Code = "UpdateAppUser",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateAppUser"
                         },
                         new
                         {
-                            Id = new Guid("ede1f40c-3b2d-4b7b-80bb-e4e21bd58243"),
+                            Id = new Guid("2049944c-9073-440b-95e9-22a8713e52a5"),
                             Code = "DeleteAppUser",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteAppUser"
                         },
                         new
                         {
-                            Id = new Guid("97e18b76-e10d-4e81-83ac-a7ade5d3f3b4"),
+                            Id = new Guid("4e255c75-f050-414f-9221-65c78cf47dee"),
                             Code = "CreateAppUserRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateAppUserRole"
                         },
                         new
                         {
-                            Id = new Guid("e6d94c2c-b260-4d0c-a304-7d6939d8f5be"),
+                            Id = new Guid("2571d215-363d-472d-aae2-acd058f279ba"),
                             Code = "ReadAppUserRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadAppUserRole"
                         },
                         new
                         {
-                            Id = new Guid("92e0322c-6371-45c8-8d11-4775244a6eb7"),
+                            Id = new Guid("0679d002-4e9d-44e6-ac72-f6cf1d25e065"),
                             Code = "UpdateAppUserRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateAppUserRole"
                         },
                         new
                         {
-                            Id = new Guid("2c670fcb-5962-4645-9b98-a2a11ea9b24c"),
+                            Id = new Guid("537de7f1-e29c-4ea6-b32f-63817556520a"),
                             Code = "DeleteAppUserRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteAppUserRole"
                         },
                         new
                         {
-                            Id = new Guid("0e071527-57a4-40ac-85b4-6fe8ae689f03"),
+                            Id = new Guid("3515c51f-2e60-45f0-b304-ce5a1a3746ec"),
                             Code = "CreateRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateRole"
                         },
                         new
                         {
-                            Id = new Guid("cd7fea40-5954-4f09-bc6a-a94988c0d0fa"),
+                            Id = new Guid("d4d373de-a8cd-434b-a117-e15b8b06f46b"),
                             Code = "ReadRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadRole"
                         },
                         new
                         {
-                            Id = new Guid("3af8ff36-926e-46dc-8f68-42c0743147e1"),
+                            Id = new Guid("d0033d57-f30c-4c85-aab5-b906725ab207"),
                             Code = "UpdateRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateRole"
                         },
                         new
                         {
-                            Id = new Guid("3e686c9d-f5ad-4293-85ad-9bdaf7f8be00"),
+                            Id = new Guid("b595be53-f67c-44ba-897f-6b2d3d05ab94"),
                             Code = "DeleteRole",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteRole"
                         },
                         new
                         {
-                            Id = new Guid("6abfbbc8-f52c-4ac4-8a8d-39a2a9b699b1"),
+                            Id = new Guid("7d1ee991-f109-4b0c-9233-65d997d20a6e"),
                             Code = "CreatePrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreatePrivilege"
                         },
                         new
                         {
-                            Id = new Guid("2b67f1c1-9706-47df-b8e2-de436ec15c96"),
+                            Id = new Guid("a4de6b58-b8e8-4830-b920-16204cb9e736"),
                             Code = "ReadPrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadPrivilege"
                         },
                         new
                         {
-                            Id = new Guid("98bb84d5-b3a3-4a2a-adc1-33191972f50c"),
+                            Id = new Guid("d963d27c-73f5-4e67-8a64-42be8e66edde"),
                             Code = "UpdatePrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdatePrivilege"
                         },
                         new
                         {
-                            Id = new Guid("2a04f504-ded9-4321-bf4a-6394a8d68e34"),
+                            Id = new Guid("8973b4b8-e80d-40ca-9419-4da95745a0f5"),
                             Code = "DeletePrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeletePrivilege"
                         },
                         new
                         {
-                            Id = new Guid("6b06be71-c0fd-4f1a-8475-27d49df94885"),
+                            Id = new Guid("c716c609-04de-4cf0-a7ab-7c6762fb3fcb"),
                             Code = "CreateRolePrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateRolePrivilege"
                         },
                         new
                         {
-                            Id = new Guid("5adaa260-8fe9-47d4-bd55-899953cd17b7"),
+                            Id = new Guid("bfc01c87-ed46-4057-a941-e2a0d92d78b7"),
                             Code = "ReadRolePrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadRolePrivilege"
                         },
                         new
                         {
-                            Id = new Guid("dd2577a6-24f4-4f93-b91c-93678dd58559"),
+                            Id = new Guid("bb6939e0-81b8-4e7e-80a4-4e5a9ecdf81f"),
                             Code = "UpdateRolePrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateRolePrivilege"
                         },
                         new
                         {
-                            Id = new Guid("765942b5-69f6-417b-9901-3e55cbdaf1c4"),
+                            Id = new Guid("5ad3e208-041a-46bf-b4d5-e6b087f3e744"),
                             Code = "DeleteRolePrivilege",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteRolePrivilege"
                         },
                         new
                         {
-                            Id = new Guid("de989a65-e12b-4458-8f8a-97b7ac374fe3"),
+                            Id = new Guid("f7557465-0327-406d-9368-f97749b9a817"),
                             Code = "CreateFoodCategory",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateFoodCategory"
                         },
                         new
                         {
-                            Id = new Guid("365933ef-f682-4e7c-8e3b-2c0fed8a51bb"),
+                            Id = new Guid("f2ebaaa5-c0ec-428a-a4c9-e22ac93e8b31"),
                             Code = "ReadFoodCategory",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadFoodCategory"
                         },
                         new
                         {
-                            Id = new Guid("30cb8b12-ffa9-44d3-a622-10ee055a7eea"),
+                            Id = new Guid("619abad8-6e70-496c-950b-01717b415cb8"),
                             Code = "UpdateFoodCategory",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateFoodCategory"
                         },
                         new
                         {
-                            Id = new Guid("307d782b-4566-468d-9e6a-80076d811609"),
+                            Id = new Guid("f901ddab-17ea-4d7c-a1a0-29850993bbbf"),
                             Code = "DeleteFoodCategory",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteFoodCategory"
                         },
                         new
                         {
-                            Id = new Guid("c7eca966-f6d9-45c3-98c8-8f9b1f7051be"),
+                            Id = new Guid("87bbf8fe-cfde-4e42-a44c-69a7b234123d"),
                             Code = "CreateFoodItemStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateFoodItemStatus"
                         },
                         new
                         {
-                            Id = new Guid("6e9a9935-9db3-4951-8d6b-12f3618389fe"),
+                            Id = new Guid("55746de5-dcad-4fca-9886-44cc4d42e5d9"),
                             Code = "ReadFoodItemStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadFoodItemStatus"
                         },
                         new
                         {
-                            Id = new Guid("af646771-acda-44dc-8e6f-ef0c70531659"),
+                            Id = new Guid("983f42b1-2d08-48cf-900e-558b36305d84"),
                             Code = "UpdateFoodItemStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateFoodItemStatus"
                         },
                         new
                         {
-                            Id = new Guid("6329652f-ea64-424b-a65d-05fbccdb9e79"),
+                            Id = new Guid("4804446e-796a-4c6a-8c6c-a2584d05ac20"),
                             Code = "DeleteFoodItemStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteFoodItemStatus"
                         },
                         new
                         {
-                            Id = new Guid("f2dca889-a381-4e0a-8249-60c1579469c2"),
+                            Id = new Guid("de89c867-4c3d-4b80-bb57-520c738622fb"),
                             Code = "CreateFoodItem",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateFoodItem"
                         },
                         new
                         {
-                            Id = new Guid("30210652-72da-4e5f-8b17-bb789498eeed"),
+                            Id = new Guid("aed01930-2411-4be4-87d9-7602e83d3238"),
                             Code = "ReadFoodItem",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadFoodItem"
                         },
                         new
                         {
-                            Id = new Guid("70d2b2e0-5afe-45d3-998d-ae3a03c56506"),
+                            Id = new Guid("afd6a22b-3f3e-42ef-810f-8c5813211d9b"),
                             Code = "UpdateFoodItem",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateFoodItem"
                         },
                         new
                         {
-                            Id = new Guid("673ed6ba-ab67-49d5-bd68-bdc53ac36f89"),
+                            Id = new Guid("e040c8c5-f283-4169-9ead-9244e458fbc3"),
                             Code = "DeleteFoodItem",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteFoodItem"
                         },
                         new
                         {
-                            Id = new Guid("6c4fc91c-af56-4b3c-bd40-cbf1298f9b86"),
+                            Id = new Guid("ed6a52c7-816a-4c62-95af-d9bb02001290"),
                             Code = "CreateDiningTable",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateDiningTable"
                         },
                         new
                         {
-                            Id = new Guid("51b21093-4f59-4718-98ee-c5f6f7246bb6"),
+                            Id = new Guid("ee99cb88-eaf1-4b14-a566-293d324ddfee"),
                             Code = "ReadDiningTable",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadDiningTable"
                         },
                         new
                         {
-                            Id = new Guid("63080caa-640e-4d43-b8ea-4df8a8d34f9e"),
+                            Id = new Guid("45f48cbe-c78a-43d1-8d78-a574390ad4d3"),
                             Code = "UpdateDiningTable",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateDiningTable"
                         },
                         new
                         {
-                            Id = new Guid("0a843b50-50fe-472d-8c53-9edf0f5a72ed"),
+                            Id = new Guid("dde87dc2-b943-4a2e-adcb-4761069949fc"),
                             Code = "DeleteDiningTable",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteDiningTable"
                         },
                         new
                         {
-                            Id = new Guid("0c837a3e-9c25-4f8a-b53e-b88f88e09747"),
+                            Id = new Guid("383c4489-e4dd-448b-a37d-2894cff5964a"),
                             Code = "CreateOrderStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateOrderStatus"
                         },
                         new
                         {
-                            Id = new Guid("ac04d0a3-34be-40d2-a3ce-1c2cfe9a0451"),
+                            Id = new Guid("121f05fe-3da2-4df0-872a-147e4f2c7e93"),
                             Code = "ReadOrderStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadOrderStatus"
                         },
                         new
                         {
-                            Id = new Guid("faefbbe7-329f-4310-b35d-65cf463090db"),
+                            Id = new Guid("7df546c9-bca9-42fe-a4f8-776436db2ece"),
                             Code = "UpdateOrderStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateOrderStatus"
                         },
                         new
                         {
-                            Id = new Guid("a8b7fce3-0c10-4997-b389-215fb8751379"),
+                            Id = new Guid("7398c034-28a3-4881-9c8f-ebb53eaf56d7"),
                             Code = "DeleteOrderStatus",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteOrderStatus"
                         },
                         new
                         {
-                            Id = new Guid("384275e8-8481-42f8-96f1-f294d5576e5b"),
+                            Id = new Guid("bd2ff3bd-6ffe-4533-a0f6-eccb06eb4e5f"),
                             Code = "CreateOrder",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateOrder"
                         },
                         new
                         {
-                            Id = new Guid("67534680-8527-4653-8109-dc38ff034066"),
+                            Id = new Guid("6c90b6da-49f4-4474-9e8e-76bf41a1716e"),
                             Code = "ReadOrder",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadOrder"
                         },
                         new
                         {
-                            Id = new Guid("6f8b1a9f-abd9-454b-bbb7-8bf207f318d1"),
+                            Id = new Guid("5cc661ea-f7fa-4fe4-9d95-0587e5161400"),
                             Code = "UpdateOrder",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateOrder"
                         },
                         new
                         {
-                            Id = new Guid("71256737-da55-4613-b5a7-637b47c9ee77"),
+                            Id = new Guid("31f0bb9c-8abd-4028-b3f7-e415c6f7371e"),
                             Code = "DeleteOrder",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteOrder"
                         },
                         new
                         {
-                            Id = new Guid("7cd2c8af-619c-4916-b771-46ca92a3f00b"),
+                            Id = new Guid("39aa6148-a9c6-4ad4-b3e3-6c92ba890798"),
                             Code = "CreateOrderDetail",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "CreateOrderDetail"
                         },
                         new
                         {
-                            Id = new Guid("638261bc-cc9e-4a8e-b506-9cd00cf655cc"),
+                            Id = new Guid("9a5198b4-ef68-450a-bf1c-6a14c8db5a81"),
                             Code = "ReadOrderDetail",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "ReadOrderDetail"
                         },
                         new
                         {
-                            Id = new Guid("55fe2fb0-d0e6-435a-95a2-c7a4128e348d"),
+                            Id = new Guid("5454ca03-50aa-4513-b01d-32c096610d66"),
                             Code = "UpdateOrderDetail",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "UpdateOrderDetail"
                         },
                         new
                         {
-                            Id = new Guid("34785b0d-55ef-4d18-9154-91dd65e49869"),
+                            Id = new Guid("371fa317-b00b-403d-adef-d7c4dda135be"),
                             Code = "DeleteOrderDetail",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "DeleteOrderDetail"
                         });
@@ -1021,41 +1024,41 @@ namespace EasyResto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
+                            Id = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
                             Code = "Admin",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("d1bbe2bc-101f-40ac-981f-8d2369c70108"),
+                            Id = new Guid("86c57788-272a-4c06-8d13-f99eceb01e45"),
                             Code = "Manager",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Manager"
                         },
                         new
                         {
-                            Id = new Guid("044e8258-b152-41fb-9a91-d719abd202c7"),
+                            Id = new Guid("52989699-15e2-4663-96e6-01a0811adffa"),
                             Code = "Cashier",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Cashier"
                         },
                         new
                         {
-                            Id = new Guid("938bb77e-79e1-46ad-b7f6-d310d9ecae0d"),
+                            Id = new Guid("5d49ae3a-765f-4ad3-a127-ddfae0708ae9"),
                             Code = "Chef",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Chef"
                         },
                         new
                         {
-                            Id = new Guid("3f1fdd95-ab54-429d-8231-87157b51d0a0"),
+                            Id = new Guid("0d7be661-df63-43c7-abaa-fc32458ccd80"),
                             Code = "Waiter",
-                            CreatedAt = new DateTime(2024, 10, 21, 14, 45, 11, 439, DateTimeKind.Local).AddTicks(3848),
+                            CreatedAt = new DateTime(2024, 10, 23, 10, 36, 51, 997, DateTimeKind.Local).AddTicks(5688),
                             CreatedBy = "Admin",
                             Name = "Waiter"
                         });
@@ -1078,243 +1081,243 @@ namespace EasyResto.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("7feafffa-bf03-425f-b16e-ba0ba930eb42")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("d710e7f7-e95e-430a-ac3b-12e270aeeb1b")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("91fd1296-1de6-4343-a50c-dd12426c3c60")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("b15eed2f-d563-4f2f-b4c9-2797b75b4370")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("1252ca85-8129-410f-bbbe-d18cd38ffc20")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("d8df5ad7-7dde-46a2-8775-b2b2e62f92c2")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("ede1f40c-3b2d-4b7b-80bb-e4e21bd58243")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("2049944c-9073-440b-95e9-22a8713e52a5")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("97e18b76-e10d-4e81-83ac-a7ade5d3f3b4")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("4e255c75-f050-414f-9221-65c78cf47dee")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("e6d94c2c-b260-4d0c-a304-7d6939d8f5be")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("2571d215-363d-472d-aae2-acd058f279ba")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("92e0322c-6371-45c8-8d11-4775244a6eb7")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("0679d002-4e9d-44e6-ac72-f6cf1d25e065")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("2c670fcb-5962-4645-9b98-a2a11ea9b24c")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("537de7f1-e29c-4ea6-b32f-63817556520a")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("0e071527-57a4-40ac-85b4-6fe8ae689f03")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("3515c51f-2e60-45f0-b304-ce5a1a3746ec")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("cd7fea40-5954-4f09-bc6a-a94988c0d0fa")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("d4d373de-a8cd-434b-a117-e15b8b06f46b")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("3af8ff36-926e-46dc-8f68-42c0743147e1")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("d0033d57-f30c-4c85-aab5-b906725ab207")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("3e686c9d-f5ad-4293-85ad-9bdaf7f8be00")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("b595be53-f67c-44ba-897f-6b2d3d05ab94")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("6abfbbc8-f52c-4ac4-8a8d-39a2a9b699b1")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("7d1ee991-f109-4b0c-9233-65d997d20a6e")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("2b67f1c1-9706-47df-b8e2-de436ec15c96")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("a4de6b58-b8e8-4830-b920-16204cb9e736")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("98bb84d5-b3a3-4a2a-adc1-33191972f50c")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("d963d27c-73f5-4e67-8a64-42be8e66edde")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("2a04f504-ded9-4321-bf4a-6394a8d68e34")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("8973b4b8-e80d-40ca-9419-4da95745a0f5")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("6b06be71-c0fd-4f1a-8475-27d49df94885")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("c716c609-04de-4cf0-a7ab-7c6762fb3fcb")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("5adaa260-8fe9-47d4-bd55-899953cd17b7")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("bfc01c87-ed46-4057-a941-e2a0d92d78b7")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("dd2577a6-24f4-4f93-b91c-93678dd58559")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("bb6939e0-81b8-4e7e-80a4-4e5a9ecdf81f")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("765942b5-69f6-417b-9901-3e55cbdaf1c4")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("5ad3e208-041a-46bf-b4d5-e6b087f3e744")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("de989a65-e12b-4458-8f8a-97b7ac374fe3")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("f7557465-0327-406d-9368-f97749b9a817")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("365933ef-f682-4e7c-8e3b-2c0fed8a51bb")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("f2ebaaa5-c0ec-428a-a4c9-e22ac93e8b31")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("30cb8b12-ffa9-44d3-a622-10ee055a7eea")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("619abad8-6e70-496c-950b-01717b415cb8")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("307d782b-4566-468d-9e6a-80076d811609")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("f901ddab-17ea-4d7c-a1a0-29850993bbbf")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("c7eca966-f6d9-45c3-98c8-8f9b1f7051be")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("87bbf8fe-cfde-4e42-a44c-69a7b234123d")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("6e9a9935-9db3-4951-8d6b-12f3618389fe")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("55746de5-dcad-4fca-9886-44cc4d42e5d9")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("af646771-acda-44dc-8e6f-ef0c70531659")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("983f42b1-2d08-48cf-900e-558b36305d84")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("6329652f-ea64-424b-a65d-05fbccdb9e79")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("4804446e-796a-4c6a-8c6c-a2584d05ac20")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("f2dca889-a381-4e0a-8249-60c1579469c2")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("de89c867-4c3d-4b80-bb57-520c738622fb")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("30210652-72da-4e5f-8b17-bb789498eeed")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("aed01930-2411-4be4-87d9-7602e83d3238")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("70d2b2e0-5afe-45d3-998d-ae3a03c56506")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("afd6a22b-3f3e-42ef-810f-8c5813211d9b")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("673ed6ba-ab67-49d5-bd68-bdc53ac36f89")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("e040c8c5-f283-4169-9ead-9244e458fbc3")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("6c4fc91c-af56-4b3c-bd40-cbf1298f9b86")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("ed6a52c7-816a-4c62-95af-d9bb02001290")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("51b21093-4f59-4718-98ee-c5f6f7246bb6")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("ee99cb88-eaf1-4b14-a566-293d324ddfee")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("63080caa-640e-4d43-b8ea-4df8a8d34f9e")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("45f48cbe-c78a-43d1-8d78-a574390ad4d3")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("0a843b50-50fe-472d-8c53-9edf0f5a72ed")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("dde87dc2-b943-4a2e-adcb-4761069949fc")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("0c837a3e-9c25-4f8a-b53e-b88f88e09747")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("383c4489-e4dd-448b-a37d-2894cff5964a")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("ac04d0a3-34be-40d2-a3ce-1c2cfe9a0451")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("121f05fe-3da2-4df0-872a-147e4f2c7e93")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("faefbbe7-329f-4310-b35d-65cf463090db")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("7df546c9-bca9-42fe-a4f8-776436db2ece")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("a8b7fce3-0c10-4997-b389-215fb8751379")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("7398c034-28a3-4881-9c8f-ebb53eaf56d7")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("384275e8-8481-42f8-96f1-f294d5576e5b")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("bd2ff3bd-6ffe-4533-a0f6-eccb06eb4e5f")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("67534680-8527-4653-8109-dc38ff034066")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("6c90b6da-49f4-4474-9e8e-76bf41a1716e")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("6f8b1a9f-abd9-454b-bbb7-8bf207f318d1")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("5cc661ea-f7fa-4fe4-9d95-0587e5161400")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("71256737-da55-4613-b5a7-637b47c9ee77")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("31f0bb9c-8abd-4028-b3f7-e415c6f7371e")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("7cd2c8af-619c-4916-b771-46ca92a3f00b")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("39aa6148-a9c6-4ad4-b3e3-6c92ba890798")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("638261bc-cc9e-4a8e-b506-9cd00cf655cc")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("9a5198b4-ef68-450a-bf1c-6a14c8db5a81")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("55fe2fb0-d0e6-435a-95a2-c7a4128e348d")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("5454ca03-50aa-4513-b01d-32c096610d66")
                         },
                         new
                         {
-                            RoleId = new Guid("59453518-e6ec-41bf-ba53-5bdb0808c0da"),
-                            PrivilegeId = new Guid("34785b0d-55ef-4d18-9154-91dd65e49869")
+                            RoleId = new Guid("0c43562f-49c6-47b3-bb27-bd48083eb487"),
+                            PrivilegeId = new Guid("371fa317-b00b-403d-adef-d7c4dda135be")
                         });
                 });
 

@@ -2,19 +2,13 @@
 using EasyResto.Domain.Enums;
 using EasyResto.Infrastructure.Service;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 
 namespace EasyResto.Infrastructure.Context
 {
     public class EasyRestoDbContext : DbContext
     {
-        private readonly string _connectionString;
-
-        public EasyRestoDbContext()
-        {
-            _connectionString = ConfigurationManager.ConnectionStrings["EasyResto"].ConnectionString;
-        }
-
+        public EasyRestoDbContext(DbContextOptions<EasyRestoDbContext> options) : base(options) { }
+        
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<AppUserRole> AppUserRoles { get; set; }
@@ -27,11 +21,6 @@ namespace EasyResto.Infrastructure.Context
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(_connectionString);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

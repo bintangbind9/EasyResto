@@ -14,9 +14,9 @@ namespace EasyResto.Infrastructure.Repository
         private readonly ILogger<AppUserRepository> _logger;
         private readonly IPasswordService _passwordService;
 
-        public AppUserRepository(EasyRestoDbContext context, ILogger<AppUserRepository> logger, IPasswordService passwordService)
+        public AppUserRepository(IDbContextFactory<EasyRestoDbContext> factory, ILogger<AppUserRepository> logger, IPasswordService passwordService)
         {
-            _context = context;
+            _context = factory.CreateDbContext();
             _logger = logger;
             _passwordService = passwordService;
         }

@@ -5,22 +5,21 @@ using EasyResto.Domain.Entities;
 using EasyResto.Infrastructure.Context;
 using EasyResto.Infrastructure.Repository;
 using EasyResto.Infrastructure.Service;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyResto.Extensions
 {
     public static class BuilderServiceExtensions
     {
-        public static IServiceCollection AddAppConfigurer(this IServiceCollection services, ConfigurationManager configuration)
+        public static IServiceCollection AddAppDI(this IServiceCollection services, ConfigurationManager configuration)
         {
             services.Configure<DbSettings>(configuration.GetSection("DbSettings"));
 
-            return services;
-        }
-
-        public static IServiceCollection AddAppDI(this IServiceCollection services)
-        {
             services.AddSingleton<IPasswordService, PasswordService>();
-            services.AddDbContext<EasyRestoDbContext>();
+            services.AddDbContextFactory<EasyRestoDbContext>(options =>
+            {
+                options.UseLazyLoadingProxies().UseSqlServer(configuration["DbSettings:ConnectionString"]);
+            });
             services.AddTransient<IBaseRepository<AppUser>, AppUserRepository>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IBaseRepository<FoodCategory>, FoodCategoryRepository>();

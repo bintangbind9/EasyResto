@@ -12,9 +12,9 @@ namespace EasyResto.Infrastructure.Repository
         private readonly EasyRestoDbContext _context;
         private readonly ILogger<FoodCategoryRepository> _logger;
 
-        public FoodCategoryRepository(EasyRestoDbContext context, ILogger<FoodCategoryRepository> logger)
+        public FoodCategoryRepository(IDbContextFactory<EasyRestoDbContext> factory, ILogger<FoodCategoryRepository> logger)
         {
-            _context = context;
+            _context = factory.CreateDbContext();
             _logger = logger;
         }
 
