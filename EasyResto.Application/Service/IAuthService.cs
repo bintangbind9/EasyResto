@@ -1,13 +1,14 @@
-﻿using EasyResto.Domain.Entities;
+﻿using EasyResto.Domain.Contracts.Response;
+using EasyResto.Domain.Entities;
 
 namespace EasyResto.Application.Service
 {
     public interface IAuthService
     {
-        public Task<string> Login(string username, string password);
+        public Task<AuthResponse> Login(string username, string password);
 
-        public Task<string> Register(AppUser appUser);
+        public Task<AuthResponse> Register(AppUser appUser);
 
-        public string GenerateJWTToken(AppUser user);
+        public string GenerateJWTToken(AppUser user, ref AuthResponse authResponse);
     }
 }

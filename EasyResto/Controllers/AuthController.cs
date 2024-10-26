@@ -36,8 +36,8 @@ namespace EasyResto.Controllers
 
             try
             {
-                string token = await _authService.Login(request.Username, request.Password);
-                response.Data = new AuthResponse { Token = token };
+                var authResponse = await _authService.Login(request.Username, request.Password);
+                response.Data = authResponse;
 
                 response.Message = "Successfully logged in.";
                 return Ok(response);
@@ -65,8 +65,8 @@ namespace EasyResto.Controllers
             try
             {
                 var appUser = _mapper.Map<AppUser>(request);
-                string token = await _authService.Register(appUser);
-                response.Data = new AuthResponse { Token = token };
+                var authResponse = await _authService.Register(appUser);
+                response.Data = authResponse;
 
                 response.Message = "Successfully Registered new User.";
                 return Ok(response);

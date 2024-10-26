@@ -1,5 +1,6 @@
 ﻿using EasyResto.Application.Repository;
 using EasyResto.Application.Service;
+using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
 using EasyResto.Domain.Enums;
 using EasyResto.Infrastructure.Repository;
@@ -24,7 +25,7 @@ namespace EasyResto.Infrastructure.Service
             _appUserRepository = (AppUserRepository)appUserRepository;
         }
 
-        public async Task<string> Login(string username, string password)
+        public async Task<AuthResponse> Login(string username, string password)
         {
             var appUser = await _appUserRepository.Get(username);
             if (appUser == null)
@@ -38,12 +39,18 @@ namespace EasyResto.Infrastructure.Service
                 throw new Exception("Username or password is not valid.");
             }
 
-            string token = GenerateJWTToken(appUser);
+            var authResponse = new AuthResponse();
+            authResponse.Name = appUser.Name;
+            authResponse.Username = appUser.Username;
 
-            return token;
+            string token = GenerateJWTToken(appUser, ref authResponse);
+
+            authResponse.Token = token;
+
+            return authResponse;
         }
 
-        public async Task<string> Register(AppUser appUser)
+        public async Task<AuthResponse> Register(AppUser appUser)
         {
             await _appUserRepository.CreateAsync(appUser);
             var newAppUser = await _appUserRepository.Get(appUser.Username);
@@ -52,12 +59,18 @@ namespace EasyResto.Infrastructure.Service
                 throw new Exception("Register new User Failed.");
             }
 
-            string token = GenerateJWTToken(newAppUser);
+            var authResponse = new AuthResponse();
+            authResponse.Name = newAppUser.Name;
+            authResponse.Username = newAppUser.Username;
 
-            return token;
+            string token = GenerateJWTToken(newAppUser, ref authResponse);
+
+            authResponse.Token = token;
+
+            return authResponse;
         }
 
-        public string GenerateJWTToken(AppUser user)
+        public string GenerateJWTToken(AppUser user, ref AuthResponse authResponse)
         {
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -68,10 +81,12 @@ namespace EasyResto.Infrastructure.Service
             foreach (AppUserRole appUserRole in user.AppUserRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, appUserRole.Role.Code));
+                authResponse.Roles.Add(appUserRole.Role.Code);
 
                 foreach (RolePrivilege rolePrivilege in appUserRole.Role.RolePrivileges)
                 {
                     claims.Add(new Claim(AuthCode.Privilege.ToString(), rolePrivilege.Privilege.Code));
+                    authResponse.Privileges.Add(rolePrivilege.Privilege.Code);
                 }
             }
 
