@@ -35,6 +35,7 @@ namespace EasyResto.Controllers
             try
             {
                 var foodCategories = await _foodCategoryRepository.GetAllAsync();
+                response.Data = foodCategories;
 
                 if (foodCategories == null || !foodCategories.Any())
                 {
@@ -43,7 +44,6 @@ namespace EasyResto.Controllers
                 }
 
                 response.Message = "Successfully retrieved all Food Categories.";
-                response.Data = foodCategories;
                 return Ok(response);
             }
             catch (Exception ex)
@@ -197,6 +197,30 @@ namespace EasyResto.Controllers
             catch (Exception ex)
             {
                 response.Message = $"An error occurred while deleting Food Category Item with id {id}.";
+                response.Errors = new List<string> { ex.Message };
+                response.Status = 500;
+                return StatusCode(500, response);
+            }
+        }
+
+        [Authorize]
+        [AuthPrivilege("DeleteFoodCategory")]
+        [HttpPost]
+        [Route("Deletes")]
+        public async Task<IActionResult> DeletesAsync(DeleteItemsRequest request)
+        {
+            var response = new BaseResponse<string>();
+
+            try
+            {
+                await _foodCategoryRepository.DeletesAsync(request.Ids);
+
+                response.Message = $"Food Categories successfully deleted.";
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"An error occurred while deleting Food Categories.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);

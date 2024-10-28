@@ -52,6 +52,20 @@ namespace EasyResto.Infrastructure.Repository
             }
         }
 
+        public async Task DeletesAsync(List<Guid> ids)
+        {
+            var appUsers = await _context.AppUsers.Where(e => ids.Contains(e.Id)).ToListAsync();
+            if (appUsers != null)
+            {
+                _context.AppUsers.RemoveRange(appUsers);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception($"No {_objName} items found.");
+            }
+        }
+
         public async Task<IEnumerable<AppUser>> GetAllAsync()
         {
             var objs = await _context.AppUsers.ToListAsync();

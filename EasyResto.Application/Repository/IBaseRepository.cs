@@ -7,5 +7,6 @@
         Task CreateAsync(T obj);
         Task UpdateAsync(Guid id, T obj);
         Task DeleteAsync(Guid id);
+        Task DeletesAsync(List<Guid> ids);
     }
 }

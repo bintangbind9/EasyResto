@@ -4,6 +4,7 @@ using EasyResto.Domain.Common;
 using EasyResto.Domain.Contracts.Request;
 using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
+using EasyResto.Infrastructure.Repository;
 using EasyResto.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -199,6 +200,30 @@ namespace EasyResto.Controllers
             catch (Exception ex)
             {
                 response.Message = $"An error occurred while deleting {_objName} with id {id}.";
+                response.Errors = new List<string> { ex.Message };
+                response.Status = 500;
+                return StatusCode(500, response);
+            }
+        }
+
+        [Authorize]
+        [AuthPrivilege("DeleteAppUser")]
+        [HttpPost]
+        [Route("Deletes")]
+        public async Task<IActionResult> DeletesAsync(DeleteItemsRequest request)
+        {
+            var response = new BaseResponse<string>();
+
+            try
+            {
+                await _appUserRepository.DeletesAsync(request.Ids);
+
+                response.Message = $"{_objName}s successfully deleted.";
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"An error occurred while deleting {_objName}s.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);
