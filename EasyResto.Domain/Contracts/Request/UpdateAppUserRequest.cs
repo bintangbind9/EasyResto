@@ -12,5 +12,9 @@ namespace EasyResto.Domain.Contracts.Request
 
         [Required]
         public bool IsActive { get; set; }
+
+        public List<Guid> RoleIdsToAdd { get; set; } = new List<Guid>();
+
+        public List<Guid> RoleIdsToRemove { get; set; } = new List<Guid>();
     }
 }

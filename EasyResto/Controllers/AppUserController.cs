@@ -4,6 +4,7 @@ using EasyResto.Domain.Common;
 using EasyResto.Domain.Contracts.Request;
 using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
+using EasyResto.Infrastructure.Repository;
 using EasyResto.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,13 @@ namespace EasyResto.Controllers
     {
         private readonly string _objName = "App User";
         private readonly ILogger<AppUserController> _logger;
-        private readonly IBaseRepository<AppUser> _appUserRepository;
+        private readonly AppUserRepository _appUserRepository;
         private readonly IMapper _mapper;
 
         public AppUserController(ILogger<AppUserController> logger, IBaseRepository<AppUser> appUserRepository, IMapper mapper)
         {
             _logger = logger;
-            _appUserRepository = appUserRepository;
+            _appUserRepository = (AppUserRepository)appUserRepository;
             _mapper = mapper;
         }
 
@@ -153,7 +154,7 @@ namespace EasyResto.Controllers
                 }
 
                 var obj = _mapper.Map<AppUser>(request);
-                await _appUserRepository.UpdateAsync(id, obj);
+                await _appUserRepository.UpdateAsync(id, obj, request.RoleIdsToAdd, request.RoleIdsToRemove);
 
                 response.Message = $"{_objName} with id {id} successfully updated.";
                 return Ok(response);

@@ -90,6 +90,13 @@ namespace EasyResto.Infrastructure.Repository
 
         public async Task UpdateAsync(Guid id, AppUser obj)
         {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateAsync(Guid id, AppUser obj, List<Guid> roleIdsToAdd, List<Guid> roleIdsToRemove)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
                 var appUser = await _context.AppUsers.FindAsync(id);
@@ -106,10 +113,41 @@ namespace EasyResto.Infrastructure.Repository
                 }
                 appUser.IsActive = obj.IsActive;
 
+                foreach (var roleId in roleIdsToRemove)
+                {
+                    var appUserRole = appUser.AppUserRoles.FirstOrDefault(e => e.RoleId == roleId);
+                    if (appUserRole is not null)
+                    {
+                        _context.AppUserRoles.Remove(appUserRole);
+                    }
+                }
+
+                foreach (var roleId in roleIdsToAdd)
+                {
+                    var role = await _context.Roles.FindAsync(roleId);
+                    if (role is null)
+                    {
+                        throw new Exception($"Role with ID {roleId} not found.");
+                    }
+
+                    if (!appUser.AppUserRoles.Any(e => e.RoleId == roleId))
+                    {
+                        var appUserRole = new AppUserRole
+                        {
+                            AppUserId = id,
+                            RoleId = roleId
+                        };
+
+                        _context.AppUserRoles.Add(appUserRole);
+                    }
+                }
+
                 await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
             }
             catch (Exception ex)
             {
+                await transaction.RollbackAsync();
                 _logger.LogError(ex, $"An error occurred while updating the {_objName} item with id {id}.");
                 throw;
             }
