@@ -75,8 +75,14 @@ namespace EasyResto.Controllers
                     return NotFound(response);
                 }
 
+                var appUserResponse = _mapper.Map<AppUserResponse>(appUser);
+                foreach (var appUserRole in appUser.AppUserRoles)
+                {
+                    appUserResponse.Roles.Add(_mapper.Map<RoleResponse>(appUserRole.Role));
+                }
+
                 response.Message = $"Successfully retrieved {_objName} with Id {id}.";
-                response.Data = _mapper.Map<AppUserResponse>(appUser);
+                response.Data = appUserResponse;
                 return Ok(response);
             }
             catch (KeyNotFoundException ex)

@@ -99,7 +99,11 @@ namespace EasyResto.Infrastructure.Repository
                 }
 
                 if (obj.Name != null) appUser.Name = obj.Name;
-                if (obj.Password != null) appUser.Password = _passwordService.HashPassword(obj.Password);
+                if (!string.IsNullOrWhiteSpace(obj.Password))
+                {
+                    if (obj.Password.Trim().Length < 5) throw new Exception("Password must be at least 5 characters long.");
+                    appUser.Password = _passwordService.HashPassword(obj.Password);
+                }
                 appUser.IsActive = obj.IsActive;
 
                 await _context.SaveChangesAsync();

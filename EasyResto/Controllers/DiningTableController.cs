@@ -4,7 +4,6 @@ using EasyResto.Domain.Common;
 using EasyResto.Domain.Contracts.Request;
 using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
-using EasyResto.Infrastructure.Repository;
 using EasyResto.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

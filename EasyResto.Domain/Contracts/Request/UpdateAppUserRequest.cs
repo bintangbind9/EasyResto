@@ -8,8 +8,7 @@ namespace EasyResto.Domain.Contracts.Request
         [StringLength(255)]
         public string Name { get; set; }
 
-        [Required]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         [Required]
         public bool IsActive { get; set; }

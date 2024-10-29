@@ -27,7 +27,8 @@ namespace EasyResto.Mapper
                 .ForMember(dest => dest.DeletedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.DeletedAt, opt => opt.Ignore());
 
-            CreateMap<AppUser, AppUserResponse>();
+            CreateMap<AppUser, AppUserResponse>()
+                .ForMember(dest => dest.Roles, opt => opt.Ignore());
 
             CreateMap<AuthRegisterRequest, AppUser>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
