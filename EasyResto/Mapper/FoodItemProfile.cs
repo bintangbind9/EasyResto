@@ -5,11 +5,11 @@ using EasyResto.Domain.Entities;
 
 namespace EasyResto.Mapper
 {
-    public class FoodCategoryProfile : Profile
+    public class FoodItemProfile : Profile
     {
-        public FoodCategoryProfile()
+        public FoodItemProfile()
         {
-            CreateMap<CreateFoodCategoryRequest, FoodCategory>()
+            CreateMap<CreateFoodItemRequest, FoodItem>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
@@ -18,7 +18,7 @@ namespace EasyResto.Mapper
                 .ForMember(dest => dest.DeletedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.DeletedAt, opt => opt.Ignore());
 
-            CreateMap<UpdateFoodCategoryRequest, FoodCategory>()
+            CreateMap<UpdateFoodItemRequest, FoodItem>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
@@ -27,7 +27,7 @@ namespace EasyResto.Mapper
                 .ForMember(dest => dest.DeletedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.DeletedAt, opt => opt.Ignore());
 
-            CreateMap<FoodCategory, FoodCategoryResponse>();
+            CreateMap<FoodItem, FoodItemResponse>();
         }
     }
 }
