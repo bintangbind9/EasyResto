@@ -44,14 +44,74 @@ namespace EasyResto.Infrastructure.Repository
             return objs;
         }
 
-        public Task<Role> GetByIdAsync(Guid id)
+        public async Task<Role> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var obj = await _context.Roles.FindAsync(id);
+            if (obj == null)
+            {
+                throw new KeyNotFoundException($"No {_objName} item with Id {id} found.");
+            }
+
+            return obj;
         }
 
         public Task UpdateAsync(Guid id, Role obj)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UpdateAsync(Guid id, Role obj, List<Guid> privilegeIdsToAdd, List<Guid> privilegeIdsToRemove)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var role = await _context.Roles.FindAsync(id);
+                if (role == null)
+                {
+                    throw new Exception($"{_objName} item with id {id} not found.");
+                }
+
+                role.Name = obj.Name;
+
+                foreach (var privilegeId in privilegeIdsToRemove)
+                {
+                    var rolePrivilege = role.RolePrivileges.FirstOrDefault(e => e.PrivilegeId == privilegeId);
+                    if (rolePrivilege is not null)
+                    {
+                        _context.RolePrivileges.Remove(rolePrivilege);
+                    }
+                }
+
+                foreach (var privilegeId in privilegeIdsToAdd)
+                {
+                    var privilege = await _context.Privileges.FindAsync(privilegeId);
+                    if (privilege is null)
+                    {
+                        throw new Exception($"Privilege with ID {privilegeId} not found.");
+                    }
+
+                    if (!role.RolePrivileges.Any(e => e.PrivilegeId == privilegeId))
+                    {
+                        var rolePrivilege = new RolePrivilege
+                        {
+                            RoleId = id,
+                            PrivilegeId = privilegeId
+                        };
+
+                        _context.RolePrivileges.Add(rolePrivilege);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, $"An error occurred while updating the {_objName} item with id {id}.");
+                throw;
+            }
         }
     }
 }

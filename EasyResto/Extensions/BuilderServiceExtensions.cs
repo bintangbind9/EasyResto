@@ -28,6 +28,7 @@ namespace EasyResto.Extensions
             services.AddTransient<IBaseRepository<FoodCategory>, FoodCategoryRepository>();
             services.AddTransient<IBaseRepository<DiningTable>, DiningTableRepository>();
             services.AddTransient<IBaseRepository<Role>, RoleRepository>();
+            services.AddTransient<IBaseRepository<Privilege>, PrivilegeRepository>();
 
             return services;
         }

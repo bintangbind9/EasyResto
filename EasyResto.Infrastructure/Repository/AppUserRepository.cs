@@ -88,7 +88,7 @@ namespace EasyResto.Infrastructure.Repository
             return obj;
         }
 
-        public async Task UpdateAsync(Guid id, AppUser obj)
+        public Task UpdateAsync(Guid id, AppUser obj)
         {
             throw new NotImplementedException();
         }
