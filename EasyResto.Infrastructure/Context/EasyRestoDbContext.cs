@@ -226,6 +226,8 @@ namespace EasyResto.Infrastructure.Context
                 entity.Property(x => x.TotalPrice).HasPrecision(17, 2);
                 entity.Property(x => x.Tax).HasPrecision(17, 2);
                 entity.Property(x => x.BillAmount).HasPrecision(17, 2);
+                entity.Property(x => x.CashierNote).IsRequired(false);
+                entity.Property(x => x.CustomerNote).IsRequired(false);
                 entity.Property(x => x.CreatedBy).IsRequired(false);
                 entity.Property(x => x.CreatedAt).IsRequired(false);
                 entity.Property(x => x.UpdatedBy).IsRequired(false);

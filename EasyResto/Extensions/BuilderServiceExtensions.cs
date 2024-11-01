@@ -31,6 +31,8 @@ namespace EasyResto.Extensions
             services.AddTransient<IBaseRepository<Privilege>, PrivilegeRepository>();
             services.AddTransient<IBaseRepository<FoodItem>, FoodItemRepository>();
             services.AddTransient<IBaseRepository<FoodItemStatus>, FoodItemStatusRepository>();
+            services.AddTransient<IBaseRepository<Order>, OrderRepository>();
+            services.AddTransient<IBaseRepository<OrderStatus>, OrderStatusRepository>();
 
             return services;
         }
