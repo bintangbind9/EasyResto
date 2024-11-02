@@ -9,7 +9,8 @@ namespace EasyResto.Mapper
     {
         public OrderProfile()
         {
-            CreateMap<Order, OrderResponse>();
+            CreateMap<Order, OrderResponse>()
+                .ForMember(dest => dest.OrderDetails, opt => opt.Ignore());
 
             CreateMap<CreateOrderRequest, Order>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())

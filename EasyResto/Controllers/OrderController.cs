@@ -46,7 +46,12 @@ namespace EasyResto.Controllers
                 }
 
                 response.Message = $"Successfully retrieved all {_objName}s.";
-                response.Data = orders.Select(e => _mapper.Map<OrderResponse>(e));
+                response.Data = orders.Select(e =>
+                {
+                    var orderResponse = _mapper.Map<OrderResponse>(e);
+                    orderResponse.OrderDetails = e.OrderDetails.Select(d => _mapper.Map<OrderDetailResponse>(d)).ToList();
+                    return orderResponse;
+                });
                 return Ok(response);
             }
             catch (Exception ex)
