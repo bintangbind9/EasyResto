@@ -1,5 +1,6 @@
 ﻿using EasyResto.Application.Repository;
 using EasyResto.Domain.Entities;
+using EasyResto.Domain.Enums;
 using EasyResto.Infrastructure.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -374,6 +375,99 @@ namespace EasyResto.Infrastructure.Repository
                         orderDetail.Qty = orderDetailToUpdate.Qty;
                     }
                 }
+                #endregion
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, $"An error occurred while updating the {_objName} item with id {id}.");
+                throw;
+            }
+        }
+
+        public async Task UpdateAsync(Guid id, OrderStatusCode orderStatusCode)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                #region GET DATA
+                var order = await _context.Orders.FindAsync(id);
+                if (order == null)
+                {
+                    throw new KeyNotFoundException($"{_objName} item with id {id} not found.");
+                }
+
+                var orderStatus = await _context.OrderStatuses.Where(e => e.Code == orderStatusCode.ToString()).SingleOrDefaultAsync();
+                if (orderStatus == null)
+                {
+                    throw new KeyNotFoundException($"OrderStatusCode {orderStatusCode} not found.");
+                }
+
+                if (string.IsNullOrWhiteSpace(_appUserId)) throw new Exception("Current User Id not found.");
+                var appUser = await _context.AppUsers.Where(e => e.Id == Guid.Parse(_appUserId!) && e.IsActive).SingleOrDefaultAsync();
+                if (appUser == null) throw new KeyNotFoundException($"Current User with Id {_appUserId} not found.");
+                #endregion
+
+                #region FILTERING & SET DATA
+                switch (orderStatusCode)
+                {
+                    case OrderStatusCode.Draft:
+                        break;
+                    case OrderStatusCode.Requested:
+                        break;
+                    case OrderStatusCode.Cooking:
+                        if (order.OrderStatus.Code != OrderStatusCode.Requested.ToString())
+                        {
+                            throw new Exception($"Order Status is not {OrderStatusCode.Requested}.");
+                        }
+                        order.Chef = appUser;
+                        break;
+                    case OrderStatusCode.Ready:
+                        if (order.OrderStatus.Code != OrderStatusCode.Cooking.ToString())
+                        {
+                            throw new Exception($"Order Status is not {OrderStatusCode.Cooking}.");
+                        }
+                        if (order.ChefId != appUser.Id)
+                        {
+                            throw new Exception("You dont have permission to finish cooking this order.");
+                        }
+                        break;
+                    case OrderStatusCode.Delivered:
+                        if (order.OrderStatus.Code != OrderStatusCode.Ready.ToString())
+                        {
+                            throw new Exception($"Order Status is not {OrderStatusCode.Ready}.");
+                        }
+                        order.Waiter = appUser;
+                        break;
+                    case OrderStatusCode.Billed:
+                        if (order.OrderStatus.Code != OrderStatusCode.Delivered.ToString())
+                        {
+                            throw new Exception($"Order Status is not {OrderStatusCode.Delivered}.");
+                        }
+                        order.Cashier = appUser;
+                        break;
+                    case OrderStatusCode.Closed:
+                        if (order.OrderStatus.Code != OrderStatusCode.Billed.ToString())
+                        {
+                            throw new Exception($"Order Status is not {OrderStatusCode.Billed}.");
+                        }
+                        break;
+                    case OrderStatusCode.Canceled:
+                        if (!(order.OrderStatus.Code == OrderStatusCode.Draft.ToString() || order.OrderStatus.Code == OrderStatusCode.Requested.ToString()))
+                        {
+                            throw new Exception($"Order Status is not {OrderStatusCode.Draft} or {OrderStatusCode.Requested}");
+                        }
+                        if (order.WaiterId != Guid.Parse(_appUserId)) throw new Exception("You dont have permission to cancel this order.");
+                        break;
+                }
+                #endregion
+
+                #region SET OrderStatus
+                order.OrderStatus = orderStatus;
                 #endregion
 
                 await _context.SaveChangesAsync();

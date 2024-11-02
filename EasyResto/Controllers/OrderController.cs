@@ -4,6 +4,8 @@ using EasyResto.Domain.Common;
 using EasyResto.Domain.Contracts.Request;
 using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
+using EasyResto.Domain.Enums;
+using EasyResto.Infrastructure.Repository;
 using EasyResto.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +19,13 @@ namespace EasyResto.Controllers
     {
         private readonly string _objName = "Order";
         private readonly ILogger<OrderController> _logger;
-        private readonly IBaseRepository<Order> _orderRepository;
+        private readonly OrderRepository _orderRepository;
         private readonly IMapper _mapper;
 
         public OrderController(ILogger<OrderController> logger, IBaseRepository<Order> orderRepository, IMapper mapper)
         {
             _logger = logger;
-            _orderRepository = orderRepository;
+            _orderRepository = (OrderRepository)orderRepository;
             _mapper = mapper;
         }
 
@@ -167,6 +169,107 @@ namespace EasyResto.Controllers
             catch (Exception ex)
             {
                 response.Message = $"An error occurred while updating {_objName} with id {id}.";
+                response.Errors = new List<string> { ex.Message };
+                response.Status = 500;
+                return StatusCode(500, response);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("UpdateOrderStatus")]
+        public async Task<IActionResult> UpdateOrderStatusAsync(UpdateOrderOrderStatusRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var response = new BaseResponse<string>();
+
+            try
+            {
+                #region Authorization
+                bool isForbidden = false;
+
+                switch (request.OrderStatusCode)
+                {
+                    case OrderStatusCode.Draft:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.UpdateOrder.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                    case OrderStatusCode.Requested:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.UpdateOrder.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                    case OrderStatusCode.Cooking:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.CookOrder.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                    case OrderStatusCode.Ready:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.CookOrder.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                    case OrderStatusCode.Delivered:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.DeliveryOrder.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                    case OrderStatusCode.Billed:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.ReceivePayment.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                    case OrderStatusCode.Closed:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.CloseOrder.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                    case OrderStatusCode.Canceled:
+                        if (!HttpContext.User.HasClaim(c => c.Type == AuthCode.Privilege.ToString() && c.Value == PrivilegeCode.UpdateOrder.ToString()))
+                        {
+                            isForbidden = true;
+                        }
+                        break;
+                }
+
+                if (isForbidden)
+                {
+                    response.Status = (int)HttpStatusCode.Forbidden;
+                    response.Title = "Forbidden";
+                    response.Message = "You don't have permission";
+                    response.Errors = new List<string> { "You don't have permission" };
+
+                    return StatusCode((int)HttpStatusCode.Forbidden, response);
+                }
+                #endregion
+
+                await _orderRepository.UpdateAsync(request.Id, request.OrderStatusCode);
+
+                response.Message = $"{_objName} with id {request.Id} successfully updated.";
+                return Ok(response);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                response.Message = $"An error occurred while retrieving the {_objName} with Id {request.Id}.";
+                response.Errors = new List<string> { ex.Message };
+                response.Status = (int)HttpStatusCode.NotFound;
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"An error occurred while updating {_objName} with id {request.Id}.";
                 response.Errors = new List<string> { ex.Message };
                 response.Status = 500;
                 return StatusCode(500, response);
