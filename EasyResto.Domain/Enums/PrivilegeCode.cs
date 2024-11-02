@@ -56,10 +56,15 @@
         ReadOrder,
         UpdateOrder,
         DeleteOrder,
+        CookOrder,
+        DeliveryOrder,
+        CloseOrder,
 
         CreateOrderDetail,
         ReadOrderDetail,
         UpdateOrderDetail,
         DeleteOrderDetail,
+
+        ReceivePayment,
     }
 }
