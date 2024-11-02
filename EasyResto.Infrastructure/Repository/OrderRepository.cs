@@ -27,17 +27,29 @@ namespace EasyResto.Infrastructure.Repository
         {
             try
             {
+                #region Waiter
                 if (string.IsNullOrWhiteSpace(_appUserId)) throw new Exception("Current User Id not found.");
                 var waiter = await _context.AppUsers.FindAsync(Guid.Parse(_appUserId!));
                 if (waiter == null) throw new Exception($"Waiter with Id {_appUserId} not found.");
                 obj.Waiter = waiter;
+                #endregion
 
+                #region Code
                 DateTime dateNow = DateTime.Now;
                 string dateNowCode = dateNow.ToString("yyyyMMdd");
-                int countOrder = await _context.Orders.CountAsync(e => e.Date.Day == dateNow.Day && e.Date.Month == dateNow.Month && e.Date.Year == dateNow.Year);
-                string number = $"0000{countOrder + 1}";
-                obj.Code = $"{_prefixCode}-{dateNowCode}{number.Substring(number.Length - 4, 4)}";
-                
+                int numberLength = 4;
+                var lastOrder = await _context.Orders.Where(e => e.Date.Day == dateNow.Day && e.Date.Month == dateNow.Month && e.Date.Year == dateNow.Year)
+                    .OrderByDescending(e => e.CreatedAt).FirstOrDefaultAsync();
+                int maxNumber = 0;
+                if (lastOrder != null)
+                {
+                    var code = lastOrder.Code;
+                    maxNumber = Convert.ToInt32(code.Substring(code.Length - numberLength, numberLength));
+                }
+                string number = $"0000{maxNumber + 1}";
+                obj.Code = $"{_prefixCode}-{dateNowCode}{number.Substring(number.Length - numberLength, numberLength)}";
+                #endregion
+
                 obj.Date = DateTime.Now;
 
                 obj.Tax = obj.Tax / 100;
@@ -54,30 +66,59 @@ namespace EasyResto.Infrastructure.Repository
 
         public async Task DeleteAsync(Guid id)
         {
-            var order = await _context.Orders.FindAsync(id);
-            if (order != null)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                _context.Orders.Remove(order);
-                await _context.SaveChangesAsync();
+                var order = await _context.Orders.FindAsync(id);
+                if (order != null)
+                {
+                    _context.OrderDetails.RemoveRange(order.OrderDetails);
+                    _context.Orders.Remove(order);
+
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                else
+                {
+                    throw new Exception($"No {_objName} item found with the id {id}.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception($"No {_objName} item found with the id {id}.");
+                await transaction.RollbackAsync();
+                throw;
             }
         }
 
         public async Task DeletesAsync(List<Guid> ids)
         {
-            var orders = await _context.Orders.Where(e => ids.Contains(e.Id)).ToListAsync();
-            if (orders != null)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                _context.Orders.RemoveRange(orders);
-                await _context.SaveChangesAsync();
+                var orders = await _context.Orders.Where(e => ids.Contains(e.Id)).ToListAsync();
+                if (orders != null)
+                {
+                    foreach (var order in orders)
+                    {
+                        _context.OrderDetails.RemoveRange(order.OrderDetails);
+                    }
+                    _context.Orders.RemoveRange(orders);
+
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                else
+                {
+                    throw new Exception($"No {_objName} items found.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception($"No {_objName} items found.");
-            }
+                await transaction.RollbackAsync();
+                throw;
+            }   
         }
 
         public async Task<IEnumerable<Order>> GetAllAsync()
