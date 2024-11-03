@@ -1,4 +1,5 @@
 ﻿using EasyResto.Application.Repository;
+using EasyResto.Domain.Contracts.Response;
 using EasyResto.Domain.Entities;
 using EasyResto.Domain.Enums;
 using EasyResto.Infrastructure.Context;
@@ -480,5 +481,35 @@ namespace EasyResto.Infrastructure.Repository
                 throw;
             }
         }
+
+        public async Task<IEnumerable<GroupOrderStatus>> GetBarData()
+        {
+            var groupOrderStatuses = await _context.Orders.GroupBy(order => new { order.Date.Date, order.OrderStatusId }).Select(group => new GroupOrderStatus
+            {
+                Date = group.Key.Date,
+                OrderStatusId = group.Key.OrderStatusId,
+                Count = group.Count()
+            }).ToListAsync();
+
+            var result = (from grouped in groupOrderStatuses
+                          join orderStatus in _context.OrderStatuses on grouped.OrderStatusId equals orderStatus.Id
+                          select new GroupOrderStatus
+                          {
+                              Date = grouped.Date,
+                              OrderStatusId = grouped.OrderStatusId,
+                              OrderStatus = new OrderStatusResponse { Id = orderStatus.Id, Code = orderStatus.Code, Name = orderStatus.Name },
+                              Count = grouped.Count
+                          }).ToList();
+
+            return result;
+        }
+    }
+
+    public class GroupOrderStatus
+    {
+        public DateTime Date { get; set; }
+        public Guid OrderStatusId { get; set; }
+        public OrderStatusResponse OrderStatus { get; set; }
+        public int Count { get; set; }
     }
 }

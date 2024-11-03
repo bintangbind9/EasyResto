@@ -103,6 +103,38 @@ namespace EasyResto.Controllers
         }
 
         [Authorize]
+        [AuthPrivilege("ReadOrder")]
+        [HttpGet]
+        [Route("GetBarData")]
+        public async Task<IActionResult> GetBarData()
+        {
+            var response = new BaseResponse<IEnumerable<GroupOrderStatus>>();
+            response.Data = new List<GroupOrderStatus>();
+
+            try
+            {
+                var groupOrderStatuses = await _orderRepository.GetBarData();
+
+                if (groupOrderStatuses == null || !groupOrderStatuses.Any())
+                {
+                    response.Message = $"No Datas found.";
+                    return Ok(response);
+                }
+
+                response.Message = $"Successfully retrieved all Datas.";
+                response.Data = groupOrderStatuses;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"An error occurred while retrieving all Datas.";
+                response.Errors = new List<string> { ex.Message };
+                response.Status = 500;
+                return StatusCode(500, response);
+            }
+        }
+
+        [Authorize]
         [AuthPrivilege("CreateOrder")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderRequest request)
