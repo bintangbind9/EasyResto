@@ -1,6 +1,6 @@
 # EasyResto
 
-C# .Net Core 8 Web Api.
+C# .Net Core 8 Web Api.  
 EasyResto is backend for EasyRestoBlazor in my repository.
 
 ## Getting Started
